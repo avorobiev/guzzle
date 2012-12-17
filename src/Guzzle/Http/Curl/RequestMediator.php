@@ -98,7 +98,12 @@ class RequestMediator
             ));
         }
 
-        return $this->request->getResponse()->getBody()->write($write);
+        $response = $this->request->getResponse();
+        if (is_null($response)) {
+            throw new \Exception('По каким-то причинам не инициализирован объект Response.');
+        }
+
+        return $response->getBody()->write($write);
     }
 
     /**
